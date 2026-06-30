@@ -1,13 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Amatic+SC:wght@400;700&display=swap');
+
+:root {
+  /* Dark mode variables (Default) */
+  --bg-primary: #0f171e;
+  --bg-surface: #1b252c;
+  --bg-glass: rgba(27, 37, 44, 0.7);
+  --border-glass: rgba(136, 189, 164, 0.18);
+  --primary: #88BDA4;
+  --primary-hover: #659287;
+  --secondary: #B1D3B9;
+  --text-main: #E6F2DD;
+  --text-muted: #8da1ad;
+  --accent-gradient: linear-gradient(135deg, #88BDA4 0%, #659287 100%);
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  --backdrop-blur: blur(10px);
+}
+
+body.light-theme {
+  /* Light mode variables */
+  --bg-primary: #f4f7f6;
+  --bg-surface: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.85);
+  --border-glass: rgba(101, 146, 135, 0.22);
+  --primary: #659287;
+  --primary-hover: #4e7369;
+  --secondary: #88BDA4;
+  --text-main: #1f2d29;
+  --text-muted: #6b7c77;
+  --accent-gradient: linear-gradient(135deg, #659287 0%, #88BDA4 100%);
+  --shadow-premium: 0 8px 32px 0 rgba(101, 146, 135, 0.12);
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Custom scrollbars for a premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-surface);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
 }

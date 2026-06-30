@@ -1,79 +1,131 @@
 .findTutorsContainer{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-  }
-  .findTutorsMainContainer{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    background-color:#83b8ff;
-    width:100%;
-    padding:30px;
-    box-shadow: 0 0 12px rgba(0,0,0,0.4);
-    line-height:30px;
-  }
-  .findTutorsHeader h1{
-    font-size:40px;
-    font-weight: 60;
-    margin-bottom:10px;
-  }
-  .findTutorsHeader h3{
-    font-size:20px;
-    margin-bottom:10px;
-  }
-  .findTutorsSearch{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex:1;
-    width:100%;
-     margin-top:10px;
-  }
-  .findTutorsSearch input{
-    padding:10px;
-    width:30%;
-    border-radius:8px 0 0 8px;
-    border:none;
-    font-size:17px;
-  
-  }
-  .findTutorsSearch button{
-    padding:10px;
-    width:10%;
-    border-radius:0 8px 8px 0;
-    border:none;
-    font-size:17px;
-    background-color:#248bd6;
-    color:white;
-    cursor:pointer;
-    transition: all 0.4s ease;
-  }
-  .findTutorsSearch button:hover{
-    background-color:#1F74B0;
-    transform:scale(1.05);
-  }
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 70px);
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
 
+.findTutorsMainContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-surface);
+  width: 100%;
+  padding: 15px 5%;
+  box-shadow: var(--shadow-premium);
+  border-bottom: 1px solid var(--border-glass);
+  gap: 20px;
+  z-index: 10;
+}
 
-.tutorResultsContainer h3{
-  text-align: center;
-  margin: 10px 0;
+.findTutorsHeader h3{
   font-size: 20px;
-  font-weight: 500;
+  color: var(--primary);
+  font-weight: 700;
+  margin: 0;
 }
-.tutorResults {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
-  grid-column-gap:15px;
-  grid-row-gap:15px;
-  margin-bottom:20px;
+
+.findTutorsSearch{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
 }
+
+.findTutorsSearch input{
+  padding: 10px 15px;
+  width: 70%;
+  border-radius: 8px 0 0 8px;
+  border: 1px solid var(--border-glass);
+  border-right: none;
+  font-size: 15px;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  transition: var(--transition-smooth);
+}
+
+.findTutorsSearch input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: -4px 0 8px rgba(136, 189, 164, 0.2);
+}
+
+.findTutorsSearch button{
+  padding: 10px 20px;
+  width: 30%;
+  border-radius: 0 8px 8px 0;
+  border: 1px solid var(--border-glass);
+  border-left: none;
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--accent-gradient);
+  color: var(--bg-primary);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.findTutorsSearch button:hover{
+  box-shadow: 4px 0 12px rgba(136, 189, 164, 0.4);
+  transform: scale(1.02);
+}
+
+.findTutorsResultsWrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding: 30px 5%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.tutorResultsContainer {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.tutorResults{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  width: 100%;
+}
+
+.findTutorsLoader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+}
+
+.findTutorsError {
+  text-align: center;
+  font-size: 18px;
+  color: #ff6b6b;
+  margin-top: 40px;
+  width: 100%;
+}
+
 .noTutorsFound{
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
-  margin-top: 20px;
+  color: var(--text-muted);
+  margin-top: 40px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .findTutorsMainContainer {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 15px 20px;
+  }
+  .findTutorsSearch {
+    max-width: 100%;
+  }
 }

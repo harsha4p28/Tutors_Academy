@@ -20,7 +20,7 @@ const FindTutors = () => {
         return () => clearTimeout(timer);
     },[query]);
 
-    useEffect(()=>{
+    useEffect(() => {
         if(debouncedQuery ===""){
             setUsers([]);
             return;
@@ -42,14 +42,10 @@ const FindTutors = () => {
     },[debouncedQuery])
 
   return (
-    <>
     <div className='findTutorsContainer'>
         <div className='findTutorsMainContainer'>
             <div className='findTutorsHeader'>
-                <h3>You can search Tutors for free and connect with them</h3> 
-                <p> Our goal is to connect both parties without any
-                    extra cost.
-                </p>
+                <h3>Search Tutors</h3> 
             </div>
             <div className='findTutorsSearch'>
                 <input
@@ -60,26 +56,30 @@ const FindTutors = () => {
                 <button>Search</button>
             </div>
         </div>
-    </div>
-    {loading ? (<div style={{textAlign: "center", marginTop: "100px"}}><ClipLoader size={80} color={"#123abc"} loading={true} className='loader'/></div>) 
-        : errMsg ? ( <div>{errMsg}</div>)
-        : users.length > 0 ? (
-            <div className='tutorResultsContainer'>
-                <h3>Tutors Found</h3>
-                <div className='tutorResults'>
-                    {users.map((user) => (
-                        <TutorResults key={user._id} user={user} />
-                    ))}
+
+        <div className='findTutorsResultsWrapper'>
+            {loading ? (
+                <div className='findTutorsLoader'>
+                    <ClipLoader size={60} color={"#88BDA4"} loading={true} />
                 </div>
-            </div>
-        ) : query ? (
-            <div className='noTutorsFound'>No Tutors Found</div>
-        ) : (
-            <div className='noTutorsFound'>Please enter a search term</div>
-        )
-        }
-    </>
+            ) : errMsg ? (
+                <div className='findTutorsError'>{errMsg}</div>
+            ) : users.length > 0 ? (
+                <div className='tutorResultsContainer'>
+                    <div className='tutorResults'>
+                        {users.map((user) => (
+                            <TutorResults key={user._id} user={user} />
+                        ))}
+                    </div>
+                </div>
+            ) : query ? (
+                <div className='noTutorsFound'>No Tutors Found</div>
+            ) : (
+                <div className='noTutorsFound'>Please enter a search term</div>
+            )}
+        </div>
+    </div>
   )
 }
 
-export default FindTutors
+export default FindTutors;

@@ -3,11 +3,11 @@
   outline:0;
   margin:0;
   box-sizing:border-box;
-  font-family:  Amatic SC,sans-serif;
+  font-family: 'Outfit', sans-serif;
 }
 
 .Image{
-  background-image:url("../Assets/tutor_image.jpg");
+  background-image: linear-gradient(rgba(15, 23, 30, 0.4), rgba(15, 23, 30, 0.85)), url("../Assets/tutor_image.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -20,75 +20,104 @@
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  color:#fff;
+  color: var(--text-main);
   position:relative;
-  top:20vh;
-  font-size:28px;
+  top:18vh;
+  font-size:32px;
   font-weight:700;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
+
 .TextCard{
-  DISPLAY:FLEX;
+  display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  padding-left: 20%;
-  background-color:#83b8ff;
-  position:relative;
-  padding:20px;
+  padding: 40px;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-premium);
 }
+
+.TextCard h1 {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.TextCard p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
 .count{
-  height:55px;
+  height: 70px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   flex-direction:row;
-  padding:3% 15%;
-  background-color: #c6cdff;
+  padding:0 15%;
+  background-color: var(--bg-surface);
   font-size:20px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.4);
-  margin-bottom:20px;
+  box-shadow: var(--shadow-premium);
+  margin-bottom:40px;
   width:100%;
-  position:relative;
+  border-bottom: 1px solid var(--border-glass);
 }
+
+.count h3 {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.count span {
+  color: var(--primary);
+  font-weight: 700;
+}
+
 .signUp{
   display:flex;
   align-items:center;
   justify-content:center;
   flex-direction:column;
+  margin-top: 20px;
 }
+
 .toggle-buttons{
   display:flex;
   justify-content:space-between;
   align-items:center;
   width:400px;
   font-size:20px;
-  border-bottom:1px solid #fff;
+  border-bottom: 2px solid var(--border-glass);
 }
+
 .toggle-buttons button{
-  width:300px;
-  height:40px;
-  background-color:#83b8ff;
+  width:200px;
+  height:50px;
+  background-color: var(--bg-surface);
   border:none;
-  color:white;
-  font-size:22px;
+  color: var(--text-muted);
+  font-size:18px;
+  font-weight: 600;
+  transition: var(--transition-smooth);
 }
+
 .ParentSignupButton{
-  padding: 10px 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
   border-radius:10px 0 0 0 ;
 }
+
 .TutorSignupButton {
-  padding: 10px 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
   border-radius:0 10px 0 0 ;
 }
 
 .ParentSignupButton.active, .TutorSignupButton.active {
-  background-color: #248bd6;
-  color: #000;
+  background-color: var(--primary);
+  color: var(--bg-primary);
 }
+
 .signUp-form{
   display:flex;
   flex-direction:column;
@@ -96,50 +125,101 @@
   align-items:center;
   text-align:center;
   width:400px;
-  background-color:#83b8ff;
-  padding:20px;
+  background: var(--bg-glass);
+  backdrop-filter: blur(10px);
+  padding:30px;
   border-radius:0 0 10px 10px;
-  margin-bottom:10px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.4);
+  border: 1px solid var(--border-glass);
+  border-top: none;
+  margin-bottom:30px;
+  box-shadow: var(--shadow-premium);
 }
+
 .signUp-form input{
-  margin:5px;
-  padding:5px;
-  width:300px;
+  margin:10px 0;
+  padding:12px;
+  width:320px;
   border-radius:8px;
-  border:none;
+  border: 1px solid var(--border-glass);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-size: 15px;
+  transition: var(--transition-smooth);
 }
+
+.signUp-form input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 8px rgba(136, 189, 164, 0.4);
+}
+
 .signUp-form button{
-  width:300px;
-  height:40px;
+  width:320px;
+  height:45px;
   border:none;
-  color:white;
-  background-color: #248bd6;
-  font-size:20px;
-  margin-top:10px;
-  border-radius:10px;
+  color: var(--bg-primary);
+  background: var(--accent-gradient);
+  font-size: 18px;
+  font-weight: 600;
+  margin-top:15px;
+  border-radius:8px;
   cursor:pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition-smooth);
 }
+
 .signUp-form button:hover{
-  transform:scale(1.05);
+  transform:scale(1.02);
+  box-shadow: 0 4px 15px rgba(136, 189, 164, 0.4);
 }
 
 .instructions{
   display:flex;
   justify-content:space-between;
-  margin-top:30px;
-  padding:40px;
-  width:auto;
-  background-color:#c6cdff;
-  box-shadow: 0 0 12px rgba(0,0,0,0.4);
+  gap: 30px;
+  margin-top:40px;
+  padding:50px;
+  width: 90%;
+  max-width: 1200px;
+  background-color: var(--bg-surface);
+  border-radius: 15px;
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-premium);
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
 }
+
 .how{
   display:flex;
   justify-content:center;
   align-items:center;
   flex-direction:column;
-  padding:20px;
-  background-color:#83b8ff;
-  color:white;
+  padding:30px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: 10px;
+  color: var(--text-main);
+  flex: 1;
+  transition: var(--transition-smooth);
+}
+
+.how:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary);
+}
+
+.how h2 {
+  color: var(--primary);
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+}
+
+.how p {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 800px) {
+  .instructions {
+    flex-direction: column;
+  }
 }

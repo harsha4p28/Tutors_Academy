@@ -2,55 +2,78 @@
   width:90%;
   margin: auto ;
 }
+
 .children-card{
   display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
-  grid-column-gap:15px;
-  grid-row-gap:15px;
-  margin-bottom:20px;
+  grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+  grid-column-gap:20px;
+  grid-row-gap:20px;
+  margin-bottom:30px;
 }
+
 .child-details{
+  width: 100%;
   max-width: 400px;
-  background-color:#C6cdff;
-  padding:15px;
-  border-radius:5px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.2);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-glass);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: var(--shadow-premium);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.child-details p {
+  color: var(--text-main);
+  font-size: 15px;
+}
+
+.child-details span {
+  color: var(--primary);
+  font-weight: 600;
 }
 
 .child-details button{
-  width:30%;
-  margin-top:10px;
-  background-color:#248bd6;
-  padding:8px;
-  border:none;
-  border-radius:5px;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-
-
+  width: 120px;
+  margin-top: 15px;
+  background: var(--accent-gradient);
+  color: var(--bg-primary);
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
 }
+
 .child-details button:hover{
-  background-color:#1F74B0;
-  transform:scale(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(136, 189, 164, 0.4);
 }
+
 .addChild{
-  width:100%;
-  text-align:center;
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
+
 .addChild button{
-  width:10%;
-  padding:10px;
-  background-color:#248bd6;
-  color:white;
-  border:none;
-  border-radius:5px;
-  font-size:18px;
-  cursor:pointer;
-  box-shadow: 0 0 12px rgba(0,0,0,0.4);
+  padding: 12px 24px;
+  background: var(--accent-gradient);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-premium);
+  transition: var(--transition-smooth);
 }
 
 .addChild button:hover{
-  background-color:#1F74B0;
-  transform:scale(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(136, 189, 164, 0.4);
 }
