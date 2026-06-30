@@ -65,6 +65,7 @@
 .messageInputContainer {
   display: flex;
   align-items: center;
+  flex-direction: row;
   padding: 15px 20px;
   background-color: var(--bg-surface);
   border-top: 1px solid var(--border-glass);
