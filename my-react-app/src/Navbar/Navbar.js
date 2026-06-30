@@ -35,7 +35,7 @@ const Navbar = () => {
           <div className="components">
             <h2><Link to="/tutor"> Become a tutor</Link></h2>
             <h2><Link to="/parent">Find a tutor</Link></h2>
-            <h2>Our policy</h2>
+            <h2><Link to="/policy">Our policy</Link></h2>
           </div>
           <div className="user">
             <button onClick={toggleTheme} className="theme-toggle-btn" aria-label="Toggle Theme">

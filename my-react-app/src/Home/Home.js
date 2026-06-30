@@ -97,8 +97,24 @@ const Home = () => {
         </div>  
       </div>
       <div className="how">
-        <h2>How it works?</h2>
-
+        <h2>How It Works?</h2>
+        <div className="steps-container">
+          <div className="step-card">
+            <div className="step-number">1</div>
+            <h3>Create Profile</h3>
+            <p>Sign up in seconds. Tutors showcase credentials and subjects, parents register learning goals and details.</p>
+          </div>
+          <div className="step-card">
+            <div className="step-number">2</div>
+            <h3>Search & Match</h3>
+            <p>Use our advanced multi-field search engine to find matches based on syllabus, location, grade level, or subject.</p>
+          </div>
+          <div className="step-card">
+            <div className="step-number">3</div>
+            <h3>Connect Instantly</h3>
+            <p>Start a direct conversation via our secure dashboard chat interface to align scheduling and start learning.</p>
+          </div>
+        </div>
       </div>
     </div>
   );

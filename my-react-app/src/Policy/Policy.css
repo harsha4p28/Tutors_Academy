@@ -1,0 +1,51 @@
+.policyMainContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 70px);
+  background-color: var(--bg-primary);
+  padding: 40px 20px;
+}
+
+.policyContainer {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-glass);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-premium);
+  width: 100%;
+  max-width: 800px;
+}
+
+.policyContainer h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 2.2rem;
+}
+
+.policySection {
+  margin-bottom: 25px;
+  border-bottom: 1px solid var(--border-glass);
+  padding-bottom: 15px;
+}
+
+.policySection:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.policySection h2 {
+  font-size: 1.4rem;
+  color: var(--secondary);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.policySection p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-main);
+}

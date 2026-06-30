@@ -14,6 +14,7 @@ import Profile from './Profile/Profile';
 import Message from './Message/Message';
 import FindTutors from './FindTutors/FindTutors';
 import FindStudents from './FindStudents/FindStudents';
+import Policy from './Policy/Policy';
 
 export default function App() {
   const { auth,loading } = useAuth();
@@ -32,6 +33,7 @@ export default function App() {
         <Routes>
           {!auth?.email ? <Route path="/" element={<Home />} /> : auth?.role === 'Tutor' ? <Route path="/" element={<Tutor />} /> : <Route path="/" element={<Parent />} />}
           <Route path="/login" element={<Login />} /> 
+          <Route path="/policy" element={<Policy />} /> 
           <Route element={<RequireAuth  />}>
             <Route path="/tutor" element={<Tutor />} />
           </Route>
