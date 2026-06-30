@@ -42,7 +42,7 @@ const Login = () => {
       console.log(response?.data); 
       console.log(response?.data?.role);
       setSuccess(true);
-      setAuth({email,role:response?.data?.role, userId : response?.data?.userId});
+      setAuth({email,role:response?.data?.role, userId : response?.data?.userId, _id: response?.data?.userId});
       console.log("Login successful", response?.data?.userId );
       navigate(from , {replace:true});
       setEmail('');

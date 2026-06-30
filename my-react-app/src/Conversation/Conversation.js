@@ -69,7 +69,7 @@ const Conversation = ({ conversationId, onMessageSent }) => {
         <div className='conversationContainer'>
           {conversation.messages && conversation.messages.length > 0 ? (
             conversation.messages.map((msg, index) => {
-              const isMe = msg.senderId === auth?._id;
+              const isMe = msg.senderId === (auth?._id || auth?.userId);
               return (
                 <div key={index} className={isMe ? 'messageReceiver' : 'messageSender'}>
                   <p>{msg.content || msg.text}</p>
