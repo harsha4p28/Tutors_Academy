@@ -1,2 +1,10 @@
-/backend/node_modules/*
-/my-react-app/node_modules/*
+node_modules/
+backend/node_modules/
+my-react-app/node_modules/
+.env
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+
