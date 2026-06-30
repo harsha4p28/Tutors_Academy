@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import axios from '../api/axios';
 import useAuth from '../hooks/useAuth';
 import "./Conversation.css";
@@ -9,20 +9,20 @@ const Conversation = ({ conversationId, onMessageSent }) => {
   const [inputText, setInputText] = useState("");
   const messagesEndRef = useRef(null);
 
-  const fetchConversation = async () => {
+  const fetchConversation = useCallback(async () => {
     try {
       const response = await axios.get(`/conversations/${conversationId}`, { withCredentials: true });
       setConversation(response.data);
     } catch (error) {
       console.error("Error fetching conversation:", error);
     }
-  };
+  }, [conversationId]);
 
   useEffect(() => {
     if (conversationId) {
       fetchConversation();
     }
-  }, [conversationId]);
+  }, [conversationId, fetchConversation]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

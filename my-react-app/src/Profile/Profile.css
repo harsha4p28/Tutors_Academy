@@ -75,3 +75,127 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(136, 189, 164, 0.4);
 }
+
+/* Change Password Modal Styles */
+.passwordModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 30, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.passwordModalContainer {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-premium);
+  padding: 40px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+}
+
+.passwordModalContainer h2 {
+  color: var(--primary);
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.closeModalIcon {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.closeModalIcon:hover {
+  color: var(--primary);
+}
+
+.modalAlert {
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.modalAlert.error {
+  background-color: rgba(255, 107, 107, 0.15);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+.modalAlert.success {
+  background-color: rgba(136, 189, 164, 0.15);
+  color: var(--primary);
+  border: 1px solid var(--border-glass);
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.modalField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.modalField label {
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.modalField input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-glass);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-size: 15px;
+  transition: var(--transition-smooth);
+}
+
+.modalField input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 8px rgba(136, 189, 164, 0.3);
+}
+
+.modalForm button {
+  width: 100%;
+  background: var(--accent-gradient);
+  color: var(--bg-primary);
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  margin-top: 10px;
+}
+
+.modalForm button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(136, 189, 164, 0.4);
+}

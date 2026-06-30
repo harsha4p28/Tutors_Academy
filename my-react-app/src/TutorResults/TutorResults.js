@@ -1,7 +1,7 @@
 import React from 'react';
 import '../Components/StudentResults/StudentResults.css';
 import axios from '../api/axios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const TutorResults = ({user}) => {
   const navigate = useNavigate();

@@ -269,14 +269,21 @@ app.get('/students/search',async (req,res)=>{
     if (!user) return res.status(404).json({ message: "User not found" });
     const query = req.query.query || "";
     const searchRegex = { $regex: query, $options: 'i' };
+    
+    const conditions = [
+      { name: searchRegex },
+      { subject: searchRegex },
+      { syllabus: searchRegex },
+      { preferedTutor: searchRegex }
+    ];
+
+    const parsedNum = Number(query);
+    if (!isNaN(parsedNum) && query.trim() !== "") {
+      conditions.push({ class: parsedNum });
+    }
+
     const child = await Children.find({
-      $or: [
-        { name: searchRegex },
-        { subject: searchRegex },
-        { class: searchRegex },
-        { syllabus: searchRegex },
-        { preferedTutor: searchRegex }
-      ]
+      $or: conditions
     }).select("-password");
     res.json(child);
   } catch (error) {
@@ -488,6 +495,38 @@ app.get("/profile", async (req,res)=>{
   if(!user) return res.status(404).json({message:"User not found"});
   return res.json({user:user});
 
+});
+
+app.post("/profile/change-password", async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ message: "Unauthorized" });
+
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const userId = decoded.userId;
+
+    const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: "Current and new passwords are required" });
+    }
+
+    const user = await User.findById(userId) || await User2.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Incorrect current password" });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedNewPassword;
+    await user.save();
+
+    return res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Change password error:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 // Logout
