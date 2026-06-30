@@ -243,7 +243,16 @@ app.get('/tutors/search',async (req,res)=>{
     const user = await User.findById(decoded.userId).select("-password") ;
     if (!user) return res.status(404).json({ message: "User not found" });
     const query = req.query.query || "";
-    const tutors = await User2.find({ name: { $regex: query, $options: 'i' } }).select("-password");
+    const searchRegex = { $regex: query, $options: 'i' };
+    const tutors = await User2.find({
+      $or: [
+        { name: searchRegex },
+        { city: searchRegex },
+        { state: searchRegex },
+        { subject: searchRegex },
+        { class: searchRegex }
+      ]
+    }).select("-password");
     res.json(tutors);
   } catch (error) {
     console.error('Search error:', error);
@@ -259,7 +268,16 @@ app.get('/students/search',async (req,res)=>{
     const user = await User2.findById(decoded.userId).select("-password") ;
     if (!user) return res.status(404).json({ message: "User not found" });
     const query = req.query.query || "";
-    const child = await Children.find({ name: { $regex: query, $options: 'i' } }).select("-password");
+    const searchRegex = { $regex: query, $options: 'i' };
+    const child = await Children.find({
+      $or: [
+        { name: searchRegex },
+        { subject: searchRegex },
+        { class: searchRegex },
+        { syllabus: searchRegex },
+        { preferedTutor: searchRegex }
+      ]
+    }).select("-password");
     res.json(child);
   } catch (error) {
     console.error('Search error:', error);

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import "./FindTutors.css";
-import useAuth from "../hooks/useAuth";
 import TutorResults from '../TutorResults/TutorResults';
 import axios from '../api/axios';
 import { ClipLoader } from 'react-spinners';
@@ -12,16 +11,15 @@ const FindTutors = () => {
     const [errMsg, setErrMsg] = useState("");
     const [users, setUsers] = useState([]);
     
-    useEffect(() =>{
-        const timer= setTimeout(() =>{
+    useEffect(() => {
+        const timer = setTimeout(() => {
             setDebouncedQuery(query);
-
-        },1000);
+        }, 400); // Shorter debouncing for faster auto-search response
         return () => clearTimeout(timer);
-    },[query]);
+    }, [query]);
 
     useEffect(() => {
-        if(debouncedQuery ===""){
+        if (debouncedQuery === "") {
             setUsers([]);
             return;
         }
@@ -31,15 +29,25 @@ const FindTutors = () => {
                 const response = await axios.get(`/tutors/search?query=${debouncedQuery}`, { withCredentials: true });
                 setUsers(response.data);
             } catch (error) {
-                setErrMsg("Error fetching tutors"+error);
+                setErrMsg("Error fetching tutors: " + error);
             } finally {
                 setLoading(false);
             }
         };
 
         fetchUsers();
+    }, [debouncedQuery]);
 
-    },[debouncedQuery])
+    const handleSearchClick = (e) => {
+        e.preventDefault();
+        setDebouncedQuery(query);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            setDebouncedQuery(query);
+        }
+    };
 
   return (
     <div className='findTutorsContainer'>
@@ -50,10 +58,12 @@ const FindTutors = () => {
             <div className='findTutorsSearch'>
                 <input
                     type="text" 
-                    placeholder='Search for tutors'
+                    placeholder='Search by name, subject, city, state or class'
                     value={query}
-                    onChange={(e) => setQuery(e.target.value)} />
-                <button>Search</button>
+                    onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                />
+                <button onClick={handleSearchClick}>Search</button>
             </div>
         </div>
 
