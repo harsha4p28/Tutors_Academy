@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import "./Message.css";
 import axios from '../api/axios';
 import userIcon from "../Assets/user-icon.jpg";
@@ -7,11 +8,11 @@ import Conversation from '../Conversation/Conversation';
 const Message = () => {
     const [startMessage, setStartMessage] = useState([]);
     const [selectedConversationId, setSelectedConversationId] = useState(null);
+    const location = useLocation();
 
     const checkMessages = async () => {
         try {
             const response = await axios.get("/conversations", { withCredentials: true });
-            console.log(response.data);
             setStartMessage(response.data);
         } catch (error) {
             console.error("Error fetching messages", error);
@@ -21,6 +22,12 @@ const Message = () => {
     useEffect(() => {
         checkMessages();
     }, []);
+
+    useEffect(() => {
+        if (location.state?.conversationId) {
+            setSelectedConversationId(location.state.conversationId);
+        }
+    }, [location.state]);
 
     const handleConversationClick = (conversationId) => {
         setSelectedConversationId(conversationId);
@@ -45,7 +52,7 @@ const Message = () => {
                                         <img src={userIcon} alt="User" />
                                         <div>
                                             <h2>{participant.userId && participant.userId.name}</h2>
-                                            <p>{message.lastMessage ? message.lastMessage.messageText : "No messages yet"}</p>
+                                            <p>{message.lastMessage ? message.lastMessage.content : "No messages yet"}</p>
                                         </div>
                                     </div>
                                     : null
@@ -54,7 +61,12 @@ const Message = () => {
                     ))}
                 </div>
             </div>
-            {selectedConversationId && <Conversation conversationId={selectedConversationId} />}
+            {selectedConversationId && (
+                <Conversation 
+                    conversationId={selectedConversationId} 
+                    onMessageSent={checkMessages}
+                />
+            )}
         </div>
     )
 }

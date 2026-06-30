@@ -17,8 +17,7 @@ const TutorResults = ({user}) => {
         withCredentials:true },
       );
       console.log(response?.data);
-      navigate("/message");
-      window.location.reload();
+      navigate("/message", { state: { conversationId: response.data.conversationId } });
     }catch (err) {  
       if (!err?.response) {
         console.log('No Server Response');

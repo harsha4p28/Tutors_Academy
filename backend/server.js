@@ -342,12 +342,11 @@ app.get('/conversations', async (req, res) => {
     if (!token) return res.status(401).json({ message: "Unauthorized" });
 
     const decoded = jwt.verify(token, JWT_SECRET);
-    const user = await User.findById(decoded.userId).select("role") || await User2.findById(decoded.userId).select("role");
-    console.log("User role:", user.role);
     const userId = decoded.userId;
 
     const conversations = await Conversation.find({
-      "participants.userId": userId
+      "participants.userId": userId,
+      lastMessage: { $ne: null } // Discard conversations with no messages
     })
       .populate({
         path: 'participants.userId',
@@ -356,15 +355,20 @@ app.get('/conversations', async (req, res) => {
       })
       .populate({
         path: 'lastMessage',
-        select: 'messageText timestamp isRead',
+        select: 'content timestamp isRead',
       })
       .sort({ lastUpdated: -1 });
 
       const filteredConversations = conversations.map(conversation => {
-        conversation.participants = conversation.participants.filter(participant => {
-          return participant.userId._id.toString() !== userId.toString(); 
+        // Filter out ourselves from the participants list returned to client
+        const otherParticipants = conversation.participants.filter(participant => {
+          return participant.userId && participant.userId._id.toString() !== userId.toString(); 
         });
-        return conversation;
+        
+        // Deep copy/clone to modify participants securely
+        const convObj = conversation.toObject();
+        convObj.participants = otherParticipants;
+        return convObj;
       });
   
       console.log("Filtered Conversations:", filteredConversations);
@@ -383,36 +387,36 @@ app.post('/messages/send', async (req, res) => {
     if (!token) return res.status(401).json({ message: "Unauthorized" });
 
     const decoded = jwt.verify(token, JWT_SECRET);
-    const receiverId = decoded.userId;
-    const { senderId, messageText , senderModel, receiverModel} = req.body;
+    const myId = decoded.userId;
+    const { conversationId, messageText } = req.body;
 
-    if (!senderId || !receiverId || !messageText || !senderModel || !receiverModel) {
-      return res.status(400).json({ error: 'Missing fields' });
+
+    if (!conversationId || !messageText) {
+      return res.status(400).json({ error: 'Missing conversationId or messageText' });
     }
 
-    let conversation = await Conversation.findOne({
-      participants: {
-        $all: [
-          { $elemMatch: { userId: senderId } },
-          { $elemMatch: { userId: receiverId } }
-        ]
-      }
-    });
-
+    const conversation = await Conversation.findById(conversationId);
     if (!conversation) {
-      conversation = await Conversation.create({
-        participants: [
-          { userId: senderId, userModel: senderModel }, 
-          { userId: receiverId, userModel: receiverModel }
-        ]
-      });
+      return res.status(404).json({ error: 'Conversation not found' });
+    }
+
+
+    // Find sender and receiver from participants
+    const senderPart = conversation.participants.find(p => p.userId.toString() === myId.toString());
+    const receiverPart = conversation.participants.find(p => p.userId.toString() !== myId.toString());
+
+    if (!senderPart) {
+      return res.status(400).json({ error: 'Sender participant not found in conversation' });
+    }
+    if (!receiverPart) {
+      return res.status(400).json({ error: 'Receiver participant not found in conversation' });
     }
 
     const newMessage = await Message.create({
-      senderId: senderId,
-      senderModel: senderModel,  
-      receiverId: receiverId,
-      receiverModel: receiverModel,  
+      senderId: senderPart.userId,
+      senderModel: senderPart.userModel,  
+      receiverId: receiverPart.userId,
+      receiverModel: receiverPart.userModel,  
       conversationId: conversation._id,
       content: messageText,
       isRead: false
@@ -426,27 +430,47 @@ app.post('/messages/send', async (req, res) => {
       }
     );
 
-    res.status(201).json({ success: true, message: 'Message sent successfully.' });
+    res.status(201).json({ success: true, message: 'Message sent successfully.', messageData: newMessage });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server Error' });
+    res.status(500).json({ error: 'Server Error', details: error.message, stack: error.stack });
   }
 });
 
 app.get('/conversations/:conversationId', async (req, res) => {
   try {
     const { conversationId } = req.params;
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ message: "Unauthorized" });
+
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const myId = decoded.userId;
 
     if (!conversationId) {
       return res.status(400).json({ message: "Conversation ID is required" });
     }
-    console.log("Conversation ID:", conversationId);
+
+    const conversation = await Conversation.findById(conversationId)
+      .populate({
+        path: 'participants.userId',
+        select: 'name email phone',
+        strictPopulate: false 
+      });
+
+    if (!conversation) {
+      return res.status(404).json({ message: "Conversation not found" });
+    }
+
+    const otherParticipant = conversation.participants.find(p => p.userId && p.userId._id.toString() !== myId.toString());
+    const otherName = otherParticipant && otherParticipant.userId ? otherParticipant.userId.name : "Conversation";
 
     const messages = await Message.find({ conversationId })
       .sort({ timestamp: 1 }); 
 
-    console.log("Messages:", messages);
-    res.status(200).json(messages);
+    res.status(200).json({
+      _id: conversation._id,
+      name: otherName,
+      messages: messages
+    });
     
   } catch (error) {
     console.error('Error fetching conversation:', error);
