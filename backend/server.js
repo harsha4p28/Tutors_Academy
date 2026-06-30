@@ -18,16 +18,13 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 
-const MONGO_URI="mongodb+srv://harsha4p28:%23Master%40281@cluster0.ptfakgc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-const JWT_SECRET = 'aesdththbgju';
+const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/tutors_academy";
+const JWT_SECRET = process.env.JWT_SECRET || 'fallback_jwt_secret_key';
 
 const isProduction = process.env.NODE_ENV === 'production';
-const allowedOrigins = isProduction
-  ? ['https://frontend-dot-tutorsacademy143.uc.r.appspot.com']
-  : [
-      'https://frontend-dot-tutorsacademy143.uc.r.appspot.com',
-      'http://localhost:3000',
-    ];
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(',') 
+  : ['http://localhost:3000'];
 
 mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
@@ -55,7 +52,7 @@ app.use(cookieParser());
 
 // For session
 app.use(session({
-  secret: 'aesdththbgju',
+  secret: process.env.SESSION_SECRET || 'fallback_session_secret_key',
   resave: false,
   saveUninitialized: false,
   cookie: {
